@@ -1,15 +1,6 @@
-function BurrowFinder(filename,filetype)
+function BurrowFinder
 
 %% Instructions
-%You MUST specify the filename (without the part after the ".") and the
-%filetype (including the "."). You must declare these two variables when
-%calling the function.
-
-%EXAMPLE:
-%filename = '2n_6_22_4';
-%filetype = '.mp4';
-%BurrowFinder(filename,filetype)
-
 %You MUST change the path_video (line 29) to the location of the videos on
 %your computer and change the path_save (line 30) to the location where
 %you would like the outputs to be saved.
@@ -28,6 +19,16 @@ StorSkels = 1;
 
 path_video = 'G:\My Drive\Maddy_Timelapse\RawVideos';
 path_save = 'G:\My Drive\Maddy_Timelapse\FrameDifferences';
+
+
+%% Interactively choose file
+list=dir(path_video);
+lst={list.name};
+[indx,tf] = listdlg('ListSTring',lst,'SelectionMode','single')
+flnm=lst{indx};
+
+filename = flnm(1:end-4);
+filetype = flnm(end-3:end);
 
 
 %% Load a usable video
@@ -99,7 +100,7 @@ se = strel('line',10,45); %structering element required for imerode function
 A = vid.read(1);
 a=A(y_r(1):y_r(2),x_r(1):x_r(2),:);
 
-frames = round(linspace(1,numFrame,round(numFrame/1000))); %Analyzes only every 100th frame
+frames = round(linspace(1,numFrame,round(numFrame/100))); %Analyzes only every 100th frame
 
 tic
 for i=1:(length(frames)-1)%numFrame

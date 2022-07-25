@@ -19,14 +19,6 @@ OUTPUTS:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 INSTRUCTIONS ON USING PROGRAM:
-You MUST specify the filename (without the part after the ".") and the filetype (including the "."). 
-You must declare these two variables when calling the function.
-
-EXAMPLE:
-filename = '2n_6_22_4';
-filetype = '.mp4';
-BurrowFinder(filename,filetype)
-
 You MUST change the path_video (line 29) to the location of the videos on your computer and change the path_save (line 30) to the location where you would like the outputs to be saved.
 
 You MAY choose to:

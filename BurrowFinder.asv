@@ -141,10 +141,9 @@ end
 toc
 %% Create composite figures to view all burrows created
 figure
-subplot(1,2,1)
-imshow(last(y_r(1):y_r(2),x_r(1):x_r(2),:));
-subplot(1,2,2)
-imshow(last(y_r(1):y_r(2),x_r(1):x_r(2),:));
+imshow(vid_roi)
+last=vid.read(frames(end));
+    b=B(y_r(1):y_r(2),x_r(1):x_r(2),:);
 hold on
 set(gca, 'YDir','reverse')
 for i = 1:(length(frames)-1)
@@ -156,11 +155,6 @@ end
 
 if StorSkels ==1
     figure
-    subplot(1,2,1)
-    imshow(last(y_r(1):y_r(2),x_r(1):x_r(2),:));
-    subplot(1,2,2)
-    imshow(last(y_r(1):y_r(2),x_r(1):x_r(2),:));
-    hold on
     set(gca, 'YDir','reverse')
     for i = 1:(length(frames)-1)
         load([path_save filesep filename filesep '3 Skeletons' filesep 'Frame' num2str(i)]);

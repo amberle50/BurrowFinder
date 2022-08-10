@@ -50,6 +50,14 @@ if bName == 'No '
     error('Camera was not stationary.')
 end
 
+%Determine which side of the tank we're looking at
+bName = questdlg('Which side of the tank is this?','Thresh Determination','N', 'S','N');
+
+if bName == 'N'
+    thresh = 0.7;
+elseif bName == 'S'
+    thresh = 0.9;
+end
 
 %% Interactively choose ROI
 
@@ -95,7 +103,7 @@ if StorSkels == 1
     mkdir([path_save filesep filename filesep '3 Skeletons']);
 end
 
- %se = strel('line',10,45); %structering element required for imerode function
+%se = strel('line',10,45); %structering element required for imerode function
 se = strel('disk',2,8); %structering element required for imerode function
 
 A = vid.read(1);
@@ -109,7 +117,7 @@ for i=1:(length(frames)-1)%numFrame
     b=B(y_r(1):y_r(2),x_r(1):x_r(2),:);
     c = imabsdiff(a,b); %take the difference between this frame and the previous one
     d = imadjust(rgb2gray(c)); %make the result grayscale and adjust the contrast to use the full range from 0-1
-    e = im2bw(d,.7); %thresholds the image and makes it black and white
+    e = im2bw(d,thresh); %thresholds the image and makes it black and white
     a = b;
     e=imerode(e,se);
     f = bwskel(e);

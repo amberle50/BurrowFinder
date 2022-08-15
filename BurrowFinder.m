@@ -147,19 +147,56 @@ for i=1:(length(frames)-1)%numFrame
     
 end
 toc
+
+%% Create the color gradient for the final figure
+
+ColNum = (length(frames)-1);
+
+c1 = [1 0 0]; %rgb value for the starting color
+c2 = [0 0 1]; %rgb value for the ending color
+
+
+%Creates a value determining the amount of color change between each frame
+cr=(c2(1)-c1(1))/(ColNum-1);
+cg=(c2(2)-c1(2))/(ColNum-1);
+cb=(c2(3)-c1(3))/(ColNum-1);
+
+%Initializes matrices.
+gradient=zeros(ColNum,3);
+r=zeros(10,ColNum);
+g=zeros(10,ColNum);
+b=zeros(10,ColNum);
+%for each color step, increase/reduce the value of Intensity data.
+for j=1:ColNum
+    gradient(j,1)=c1(1)+cr*(j-1);
+    gradient(j,2)=c1(2)+cg*(j-1);
+    gradient(j,3)=c1(3)+cb*(j-1);
+    r(:,j)=gradient(j,1);
+    g(:,j)=gradient(j,2);
+    b(:,j)=gradient(j,3);
+end
+
+%merge R G B matrix and obtain our image.
+imColGradient=cat(3,r,g,b);
+
+
 %% Create composite figures to view all burrows created
+
 figure
-subplot(1,2,1)
+orig=subplot('Position', [0.1300    0.1210    0.29    0.79]);
 imshow(last(y_r(1):y_r(2),x_r(1):x_r(2),:));
-subplot(1,2,2)
+fin=subplot('Position', [0.5703    0.1100    0.3347    0.8150]);
 imshow(last(y_r(1):y_r(2),x_r(1):x_r(2),:));
 hold on
 set(gca, 'YDir','reverse')
 for i = 1:(length(frames)-1)
     load([path_save filesep filename filesep '2 Thresholded Images' filesep 'Frame' num2str(i)]);
     hold on
-    plot(epoints(:,1),epoints(:,2),'.')
+    plot(epoints(:,1),epoints(:,2),'.','MarkerFaceColor',gradient(i,:),'MarkerEdgeColor',gradient(i,:))
 end
+
+colormap(gradient)
+colorbar
 
 
 if StorSkels ==1

@@ -1,8 +1,8 @@
 function BurrowFinder
 
 %% Instructions
-%You MUST change the path_video (line 29) to the location of the videos on
-%your computer and change the path_save (line 30) to the location where
+%You MUST change the path_video (line 22) to the location of the videos on
+%your computer and change the path_save (line 23) to the location where
 %you would like the outputs to be saved.
 
 %You MAY choose to:

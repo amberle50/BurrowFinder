@@ -12,14 +12,18 @@ function BurrowFinder
 
 %% Setup logistics
 
+framesecs = 10; %how many seconds of real time does each video frame represent?
+skiprate = 100; %the skip rate of frames you want to analyze, eg. 1 = every frame being analyzed
+
 StorDiffs = 1;
 StorThreshs = 1;
 StorSkels = 0;
 
-
 path_video = 'G:\My Drive\Maddy_Timelapse\RawVideos';
 path_save = 'G:\My Drive\Maddy_Timelapse\FrameDifferences';
 
+%Set the time in seconds of the longest video you wish to analyze
+longestvideo = 70; %This will standardize the color gradient between videos
 
 %% Interactively choose file
 list=dir(path_video);
@@ -109,7 +113,7 @@ se = strel('disk',2,8); %structering element required for imerode function
 A = vid.read(1);
 a=A(y_r(1):y_r(2),x_r(1):x_r(2),:);
 
-frames = round(linspace(1,numFrame,round(numFrame/100))); %Analyzes only every 100th frame
+frames = round(linspace(1,numFrame,round(numFrame/skiprate))); %Analyzes only every 100th frame
 
 tic
 for i=1:(length(frames)-1)%numFrame
@@ -150,7 +154,7 @@ toc
 
 %% Create the color gradient for the final figure
 
-ColNum = (length(frames)-1);
+ColNum = longestvideo;
 
 c1 = [1 0 0]; %rgb value for the starting color
 c2 = [0 0 1]; %rgb value for the ending color
@@ -179,6 +183,20 @@ end
 %merge R G B matrix and obtain our image.
 imColGradient=cat(3,r,g,b);
 
+%% Create the tick labels for the final figure
+anainterval=framesecs * skiprate;
+ColTicks=linspace(0, longestvideo, 6);
+ColTicks=ColTicks/60;
+ColTicks = round(ColTicks,2,'significant')
+
+TickLabels = {
+    [num2str(ColTicks(1)), ' min'];
+    [num2str(ColTicks(2)), ' min'];
+    [num2str(ColTicks(3)), ' min'];
+    [num2str(ColTicks(4)), ' min'];
+    [num2str(ColTicks(5)), ' min'];
+    [num2str(ColTicks(6)), ' min'];
+   }
 
 %% Create composite figures to view all burrows created
 
@@ -196,7 +214,9 @@ for i = 1:(length(frames)-1)
 end
 
 colormap(gradient)
-colorbar
+ColBar=colorbar;
+ColBar.Ticks = [0,0.2,0.4,0.6,0.8,1];
+ColBar.TickLabels = TickLabels;
 
 
 if StorSkels ==1

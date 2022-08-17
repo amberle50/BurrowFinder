@@ -23,7 +23,7 @@ path_video = 'G:\My Drive\Maddy_Timelapse\RawVideos';
 path_save = 'G:\My Drive\Maddy_Timelapse\FrameDifferences';
 
 %Set the time in seconds of the longest video you wish to analyze
-longestvideo = 70; %This will standardize the color gradient between videos
+longestvideo = 240; %This will standardize the color gradient between videos
 
 %% Interactively choose file
 list=dir(path_video);
@@ -154,7 +154,7 @@ toc
 
 %% Create the color gradient for the final figure
 
-ColNum = longestvideo;
+ColNum = longestvideo * 30 / skiprate; %for a framerate of 30fps
 
 c1 = [1 0 0]; %rgb value for the starting color
 c2 = [0 0 1]; %rgb value for the ending color

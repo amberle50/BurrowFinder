@@ -184,10 +184,8 @@ end
 imColGradient=cat(3,r,g,b);
 
 %% Create the tick labels for the final figure
-anainterval=framesecs * skiprate;
 maxtime=longestvideo * 30 * framesecs/60/60;% in hours
 ColTicks=linspace(0, maxtime, 6);
-ColTicks=ColTicks/60;
 ColTicks = round(ColTicks,2,'significant')
 
 TickLabels = {

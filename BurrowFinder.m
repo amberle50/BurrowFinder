@@ -184,18 +184,17 @@ end
 imColGradient=cat(3,r,g,b);
 
 %% Create the tick labels for the final figure
-anainterval=framesecs * skiprate;
-ColTicks=linspace(0, longestvideo, 6);
-ColTicks=ColTicks/60;
+maxtime=longestvideo * 30 * framesecs/60/60;% in hours
+ColTicks=linspace(0, maxtime, 6);
 ColTicks = round(ColTicks,2,'significant')
 
 TickLabels = {
-    [num2str(ColTicks(1)), ' min'];
-    [num2str(ColTicks(2)), ' min'];
-    [num2str(ColTicks(3)), ' min'];
-    [num2str(ColTicks(4)), ' min'];
-    [num2str(ColTicks(5)), ' min'];
-    [num2str(ColTicks(6)), ' min'];
+    [num2str(ColTicks(1)), ' hr'];
+    [num2str(ColTicks(2)), ' hr'];
+    [num2str(ColTicks(3)), ' hr'];
+    [num2str(ColTicks(4)), ' hr'];
+    [num2str(ColTicks(5)), ' hr'];
+    [num2str(ColTicks(6)), ' hr'];
    }
 
 %% Create composite figures to view all burrows created

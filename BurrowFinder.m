@@ -28,7 +28,7 @@ longestvideo = 240; %This will standardize the color gradient between videos
 %% Interactively choose file
 list=dir(path_video);
 lst={list.name};
-[indx,tf] = listdlg('ListSTring',lst,'SelectionMode','single')
+[indx,~] = listdlg('ListSTring',lst,'SelectionMode','single');
 flnm=lst{indx};
 
 filename = flnm(1:end-4);
@@ -66,15 +66,15 @@ end
 %% Interactively choose ROI
 
 %Give instructions to person finding the ROI
-bName = questdlg('On the following figure, click the four points that correspond to the square of sediment. Include as little of the white tank within the square as possible. Once the four points have been chosen, double click the first point to complete the square.','Instructions','Start','Start');
+questdlg('On the following figure, click the four points that correspond to the square of sediment. Include as little of the white tank within the square as possible. Once the four points have been chosen, double click the first point to complete the square.','Instructions','Start','Start');
 
 figure
 imshow(first)
-title(['Choose ROI points.'])
+title('Choose ROI points.')
 
 % Interactively find ROI
 h = impoly;
-roi_poly = wait(h);
+wait(h);
 
 % Store ROI points
 tmp = getPosition(h);
@@ -186,7 +186,7 @@ imColGradient=cat(3,r,g,b);
 %% Create the tick labels for the final figure
 maxtime=longestvideo * 30 * framesecs/60/60;% in hours
 ColTicks=linspace(0, maxtime, 6);
-ColTicks = round(ColTicks,2,'significant')
+ColTicks = round(ColTicks,2,'significant');
 
 TickLabels = {
     [num2str(ColTicks(1)), ' hr'];
@@ -195,7 +195,7 @@ TickLabels = {
     [num2str(ColTicks(4)), ' hr'];
     [num2str(ColTicks(5)), ' hr'];
     [num2str(ColTicks(6)), ' hr'];
-   }
+   };
 
 %% Create composite figures to view all burrows created
 
